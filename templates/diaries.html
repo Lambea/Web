@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}📖 我的日記{% endblock %}
+
+{% block content %}
+<h1>📖 我的日記</h1>
+<div style="max-width: 800px; margin: auto;">
+  {% if diaries %}
+    {% for d in diaries %}
+      <div style="border:1px solid #ccc; border-radius:8px; padding:10px; margin:10px; background:white;">
+        <h3>{{ d.date }} {{ d.title }}</h3>
+        <p>{{ d.diary }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>目前還沒有日記。</p>
+  {% endif %}
+</div>
+{% endblock %}

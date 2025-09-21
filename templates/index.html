@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %}📅 我的行事曆{% endblock %}
+
+{% block content %}
+<h1>📅 我的行事曆</h1>
+
+<!-- 🔍 搜尋 & 篩選 -->
+<div style="max-width: 900px; margin: 10px auto; text-align: center;">
+  <input type="text" id="searchInput" placeholder="🔍 搜尋標題或日記" style="padding:5px; width:200px;">
+  <select id="tagFilter" style="padding:5px;">
+    <option value="">全部標籤</option>
+    <option value="工作">工作</option>
+    <option value="生活">生活</option>
+    <option value="運動">運動</option>
+  </select>
+</div>
+
+<!-- 行事曆 -->
+<div id="calendar"></div>
+
+<!-- 選擇新增內容 Modal -->
+<div id="chooseModal" class="modal">
+  <h3>請選擇要新增的內容</h3>
+  <button type="button" onclick="openEventModal()">➕ 新增事件</button>
+  <button type="button" onclick="openDiaryModal()">📖 新增日記</button>
+  <button type="button" onclick="openImageModal()">🖼️ 新增圖片</button>
+  <button type="button" onclick="closeChooseModal()">取消</button>
+</div>
+
+<!-- 新增事件 Modal -->
+<div id="eventModal" class="modal">
+  <h3>新增事件</h3>
+  <form method="POST" action="/add_event" enctype="multipart/form-data">
+    <input type="hidden" id="date_event" name="date">
+    <label>標題: <input type="text" name="title" required></label><br><br>
+    <label>時間: <input type="time" name="time" required></label><br><br>
+    <label>標籤:
+      <select name="tag">
+        <option value="">無</option>
+        <option value="工作">工作</option>
+        <option value="生活">生活</option>
+        <option value="運動">運動</option>
+      </select>
+    </label><br><br>
+    <label>循環:
+      <select name="repeat_rule">
+        <option value="none">不循環</option>
+        <option value="daily">每天</option>
+        <option value="weekly">每週</option>
+        <option value="monthly">每月</option>
+        <option value="every_3_days">每 3 天</option>
+      </select>
+    </label><br><br>
+    <label>顏色: <input type="color" name="color" value="#007bff"></label><br><br>
+    <button type="submit">新增</button>
+    <button type="button" onclick="closeModal('eventModal')">取消</button>
+  </form>
+</div>
+
+<!-- 新增日記 Modal -->
+<div id="diaryModal" class="modal">
+  <h3>新增日記</h3>
+  <form method="POST" action="/add_event" enctype="multipart/form-data">
+    <input type="hidden" id="date_diary" name="date">
+    <input type="hidden" name="time" value="00:00">
+    <label>日記:<br>
+      <textarea name="diary" rows="5" cols="40" required></textarea>
+    </label><br><br>
+    <button type="submit">新增</button>
+    <button type="button" onclick="closeModal('diaryModal')">取消</button>
+  </form>
+</div>
+
+<!-- 新增圖片 Modal -->
+<div id="imageModal" class="modal">
+  <h3>新增圖片</h3>
+  <form method="POST" action="/add_event" enctype="multipart/form-data">
+    <input type="hidden" id="date_image" name="date">
+    <input type="hidden" name="time" value="00:00">
+    <label>圖片: <input type="file" name="image" required></label><br><br>
+    <button type="submit">新增</button>
+    <button type="button" onclick="closeModal('imageModal')">取消</button>
+  </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- FullCalendar -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<!-- Calendar.js -->
+<script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+
+<script>
+  var selectedDate = null;
+  function closeChooseModal() { document.getElementById("chooseModal").style.display = "none"; }
+  function openEventModal() { closeChooseModal(); document.getElementById("eventModal").style.display = "block"; }
+  function openDiaryModal() { closeChooseModal(); document.getElementById("diaryModal").style.display = "block"; }
+  function openImageModal() { closeChooseModal(); document.getElementById("imageModal").style.display = "block"; }
+  function closeModal(id) { document.getElementById(id).style.display = "none"; }
+</script>
+{% endblock %}

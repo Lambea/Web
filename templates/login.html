@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}登入{% endblock %}
+
+{% block content %}
+<h2>🔑 登入</h2>
+<form method="POST" style="max-width:300px; margin:auto;">
+  <label>帳號:<input type="text" name="username" required></label><br><br>
+  <label>密碼:<input type="password" name="password" required></label><br><br>
+  <button type="submit">登入</button>
+</form>
+<p><a href="{{ url_for('register') }}">還沒有帳號？註冊</a></p>
+{% endblock %}
