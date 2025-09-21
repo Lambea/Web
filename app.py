@@ -5,6 +5,9 @@ import os
 from lunarcalendar import Converter, Solar
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_migrate import Migrate
+
+migrate = Migrate(app, db)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -176,3 +179,4 @@ def get_lunar(date):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
