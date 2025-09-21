@@ -1,9 +1,8 @@
-﻿Flask==2.3.2
+Flask==2.3.2
 Flask-SQLAlchemy==3.0.5
-Flask-Migrate==4.0.5
+Flask-Login==0.6.2
 gunicorn==21.2.0
 lunarcalendar==0.0.9
 pytz==2023.3
-python-dateutil==2.9.0.post0
-Flask-Login
+Werkzeug==2.3.6
 
