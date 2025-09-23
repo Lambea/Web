@@ -1,13 +1,8 @@
-flask==2.3.2
-flask-sqlalchemy==3.0.5
-flask-migrate==4.0.4
+Flask==2.3.2
+Flask-SQLAlchemy==3.0.5
 Flask-Login==0.6.2
+Flask-Migrate==4.0.4
 gunicorn==21.2.0
 lunarcalendar==0.0.9
 pytz==2023.3
-werkzeug==2.3.6
-
-
-
-
-
+Werkzeug==2.3.6
