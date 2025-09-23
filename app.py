@@ -7,16 +7,24 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_migrate import Migrate
 
-migrate = Migrate(app, db)
-
+# -------------------------
+# 建立 Flask App
+# -------------------------
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = os.path.join("static", "uploads")
 app.secret_key = "supersecret"  # 🔹 必須設定 session 金鑰
 
+# -------------------------
+# 初始化 DB 與 Migrate
+# -------------------------
 db.init_app(app)
+migrate = Migrate(app, db)
 
+# -------------------------
+# 登入管理
+# -------------------------
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
@@ -143,7 +151,7 @@ def add_event():
         diary=diary,
         image_path=image_path,
         color=color,
-        user_id=current_user.id  # 🔹 關聯使用者
+        user_id=current_user.id
     )
     db.session.add(new_event)
     db.session.commit()
@@ -179,4 +187,3 @@ def get_lunar(date):
 
 if __name__ == "__main__":
     app.run(debug=True)
-
