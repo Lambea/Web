@@ -9,12 +9,16 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
+    # 🔹 加上反向關聯，可以直接用 user.events 取使用者的事件
+    events = db.relationship("Event", backref="user", lazy=True)
+
+
 # 事件模型
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200))
-    date = db.Column(db.String(20))
-    time = db.Column(db.String(10))
+    date = db.Column(db.String(20))          # ⚠️ 可以考慮換成 db.Date
+    time = db.Column(db.String(10))          # ⚠️ 可以考慮換成 db.Time
     end_time = db.Column(db.String(10), nullable=True)
     tag = db.Column(db.String(50), nullable=True)
     repeat_rule = db.Column(db.String(50), default="none")
